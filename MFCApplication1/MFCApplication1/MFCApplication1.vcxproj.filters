@@ -33,15 +33,6 @@
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Login.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Salesman.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCApplication1.cpp">
@@ -51,15 +42,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Login.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Salesman.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

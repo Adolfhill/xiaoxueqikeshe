@@ -7,8 +7,6 @@
 #include "MFCApplication1.h"
 #include "MFCApplication1Dlg.h"
 #include "afxdialogex.h"
-#include "Salesman.h"
-#include "Manager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -67,7 +65,8 @@ BEGIN_MESSAGE_MAP(CMFCApplication1Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON_OK, &CMFCApplication1Dlg::OnBnClickedButtonOk)
+	ON_BN_CLICKED(IDC_BUTTON_login_ok, &CMFCApplication1Dlg::OnBnClickedButtonloginok)
+	ON_BN_CLICKED(IDC_BUTTON_showpwd, &CMFCApplication1Dlg::OnBnClickedButtonshowpwd)
 END_MESSAGE_MAP()
 
 
@@ -103,6 +102,13 @@ BOOL CMFCApplication1Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+
+	//输入时密码不显示
+	TCHAR ch = '*';
+	((CEdit *)GetDlgItem(IDC_EDIT_user_pwd))->SetPasswordChar(ch);
+
+	//初始化选择"职工"身份
+	((CButton *)GetDlgItem(IDC_RADIO1))->SetCheck(TRUE);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -158,7 +164,7 @@ HCURSOR CMFCApplication1Dlg::OnQueryDragIcon()
 
 
 
-void CMFCApplication1Dlg::OnBnClickedButtonOk()
+void CMFCApplication1Dlg::OnBnClickedButtonloginok()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (!((CButton *)GetDlgItem(IDC_RADIO1))->GetCheck() && !((CButton *)GetDlgItem(IDC_RADIO2))->GetCheck())
@@ -168,8 +174,8 @@ void CMFCApplication1Dlg::OnBnClickedButtonOk()
 	}
 
 	CString strUserId, strUserPwd;
-	GetDlgItemText(IDC_EDIT_User_Id, strUserId);
-	GetDlgItemText(IDC_EDIT_User_Pwd, strUserPwd);
+	GetDlgItemText(IDC_EDIT_user_id, strUserId);
+	GetDlgItemText(IDC_EDIT_user_pwd, strUserPwd);
 
 	if (strUserId == "" || strUserPwd == "")
 	{
@@ -212,14 +218,14 @@ void CMFCApplication1Dlg::OnBnClickedButtonOk()
 			if (((CButton *)GetDlgItem(IDC_RADIO1))->GetCheck())
 			{
 				//员工页面
-				Salesman Dlg;
-				Dlg.DoModal();
+				//Salesman Dlg;
+				//Dlg.DoModal();
 			}
 			else if (((CButton *)GetDlgItem(IDC_RADIO2))->GetCheck())
 			{
 				//经理页面
-				Manager Dlg;
-				Dlg.DoModal();
+				//Manager Dlg;
+				//Dlg.DoModal();
 			}
 		}
 		else
@@ -230,5 +236,15 @@ void CMFCApplication1Dlg::OnBnClickedButtonOk()
 		}
 
 	}
+}
 
+
+void CMFCApplication1Dlg::OnBnClickedButtonshowpwd()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString m_Password;
+	GetDlgItem(IDC_EDIT_user_pwd)->GetWindowText(m_Password);
+	if (m_Password == "")
+		m_Password = _T("请输入密码！");
+	AfxMessageBox(m_Password);
 }
