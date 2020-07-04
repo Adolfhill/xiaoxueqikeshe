@@ -7,6 +7,7 @@
 #include "MFCApplication1.h"
 #include "MFCApplication1Dlg.h"
 #include "afxdialogex.h"
+#include "salesman.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -188,6 +189,8 @@ void CMFCApplication1Dlg::OnBnClickedButtonloginok()
 		return;
 	}
 
+
+
 	_ConnectionPtr m_pConnection;
 	_CommandPtr m_pCommand;
 	_RecordsetPtr m_pRecordset;
@@ -215,11 +218,12 @@ void CMFCApplication1Dlg::OnBnClickedButtonloginok()
 		if (!m_pRecordset->adoBOF)
 		{
 			//用户名密码正确，有数据，表示数据库里有该用户，说明该用户身份合法，允许继续使用
+			ShowWindow(SW_HIDE);
 			if (((CButton *)GetDlgItem(IDC_RADIO1))->GetCheck())
 			{
 				//员工页面
-				//Salesman Dlg;
-				//Dlg.DoModal();
+				salesman Dlg;
+				Dlg.DoModal();
 			}
 			else if (((CButton *)GetDlgItem(IDC_RADIO2))->GetCheck())
 			{
@@ -227,6 +231,7 @@ void CMFCApplication1Dlg::OnBnClickedButtonloginok()
 				//Manager Dlg;
 				//Dlg.DoModal();
 			}
+			
 		}
 		else
 		{
