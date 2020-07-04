@@ -27,6 +27,8 @@ void salesman::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_edit_mid);
 	DDX_Control(pDX, IDC_EDIT2, m_edit_mter);
+	DDX_Control(pDX, IDC_EDIT_member_id, m_edit_mid_input);
+	DDX_Control(pDX, IDC_EDIT_member_pwd, m_edit_mpwd_input);
 }
 
 
@@ -35,6 +37,7 @@ BEGIN_MESSAGE_MAP(salesman, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &salesman::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &salesman::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, &salesman::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON_member_signout, &salesman::OnBnClickedButtonmembersignout)
 END_MESSAGE_MAP()
 
 
@@ -138,4 +141,16 @@ void salesman::OnBnClickedButton3()
 	if (m_Password == "")
 		m_Password = _T("请输入密码！");
 	AfxMessageBox(m_Password);
+}
+
+
+void salesman::OnBnClickedButtonmembersignout()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	member_now.if_login = 0;
+	member_now.member_id = "0";
+	m_edit_mid.SetWindowText(_T(""));
+	m_edit_mter.SetWindowText(_T(""));
+	m_edit_mid_input.SetWindowText(_T(""));
+	m_edit_mpwd_input.SetWindowText(_T(""));
 }

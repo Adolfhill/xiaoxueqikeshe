@@ -42,6 +42,9 @@ public:
 	afx_msg void OnBnClickedButton3();
 	CEdit m_edit_mid;
 	CEdit m_edit_mter;
+	afx_msg void OnBnClickedButtonmembersignout();
+	CEdit m_edit_mid_input;
+	CEdit m_edit_mpwd_input;
 };
 
 
