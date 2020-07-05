@@ -5,7 +5,7 @@
 #include "MFCApplication1.h"
 #include "salesman.h"
 #include "afxdialogex.h"
-
+#include "member_registered.h"
 
 
 // salesman 对话框
@@ -42,6 +42,10 @@ BEGIN_MESSAGE_MAP(salesman, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON3, &salesman::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON_member_signout, &salesman::OnBnClickedButtonmembersignout)
 	ON_BN_CLICKED(IDC_BUTTON_add_to_list, &salesman::OnBnClickedButtonaddtolist)
+	ON_BN_CLICKED(IDC_BUTTON4, &salesman::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON_select_all, &salesman::OnBnClickedButtonselectall)
+	ON_BN_CLICKED(IDC_BUTTON_rev, &salesman::OnBnClickedButtonrev)
+	ON_BN_CLICKED(IDC_BUTTON_del, &salesman::OnBnClickedButtondel)
 END_MESSAGE_MAP()
 
 
@@ -64,7 +68,7 @@ BOOL salesman::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	// TODO:  在此添加额外的初始化
-
+	m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_CHECKBOXES);
 	m_edit_mid.SetWindowText(_T(""));
 
 	TCHAR ch = '*';
@@ -141,7 +145,20 @@ void salesman::OnBnClickedButton1()
 void salesman::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
-
+	//退出会员登录
+	OnBnClickedButtonmembersignout();
+	//注册界面
+	member_registered dlg;
+	dlg.DoModal();
+	if (!dlg.ok)
+	{
+		AfxMessageBox(_T("注册失败！"));
+		return;
+	}
+	//注册成功
+	member_now = dlg.member_now;
+	AfxMessageBox(_T("注册成功！\n 您的ID为")+member_now.member_id);
+	return;
 }
 
 
@@ -230,4 +247,36 @@ std::map<CString, float> salesman::get_the_map()
 		m_pRecordset = NULL;
 	}
 	return to_return;
+}
+
+void salesman::OnBnClickedButton4()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void salesman::OnBnClickedButtonselectall()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	for (int i = 0; i < m_list.GetItemCount(); i++)
+		m_list.SetCheck(i);
+}
+
+
+void salesman::OnBnClickedButtonrev()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	for (int i = 0; i < m_list.GetItemCount(); i++)
+		m_list.SetCheck(i, !m_list.GetCheck(i));
+}
+
+
+void salesman::OnBnClickedButtondel()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	for (int i = 0; i < m_list.GetItemCount(); i++)
+		if (m_list.GetCheck(i))
+		{
+			m_list.DeleteItem(i--);
+		}
 }

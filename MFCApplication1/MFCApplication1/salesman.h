@@ -1,17 +1,10 @@
 ﻿#pragma once
 #include <map>
 #include <vector>
+#include"member_registered.h"
 // salesman 对话框
 
-struct member
-{
-	CString member_id;
-	bool if_login;
-	//积分，用于抵现
-	float integral;
-	//消费，用于打折
-	float consumption;
-};
+
 
 
 class salesman : public CDialogEx
@@ -51,6 +44,10 @@ public:
 	CEdit m_edit_commodity_id;
 	CEdit m_edit_commodity_count;
 	afx_msg void OnBnClickedButtonaddtolist();
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedButtonselectall();
+	afx_msg void OnBnClickedButtonrev();
+	afx_msg void OnBnClickedButtondel();
 };
 
 
