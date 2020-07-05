@@ -5,7 +5,7 @@
 #include "MFCApplication1.h"
 #include "salesman.h"
 #include "afxdialogex.h"
-#include <string>
+
 
 
 // salesman 对话框
@@ -29,6 +29,9 @@ void salesman::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT2, m_edit_mter);
 	DDX_Control(pDX, IDC_EDIT_member_id, m_edit_mid_input);
 	DDX_Control(pDX, IDC_EDIT_member_pwd, m_edit_mpwd_input);
+	DDX_Control(pDX, IDC_LIST3, m_list);
+	DDX_Control(pDX, IDC_EDIT3, m_edit_commodity_id);
+	DDX_Control(pDX, IDC_EDIT4, m_edit_commodity_count);
 }
 
 
@@ -38,6 +41,7 @@ BEGIN_MESSAGE_MAP(salesman, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &salesman::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, &salesman::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON_member_signout, &salesman::OnBnClickedButtonmembersignout)
+	ON_BN_CLICKED(IDC_BUTTON_add_to_list, &salesman::OnBnClickedButtonaddtolist)
 END_MESSAGE_MAP()
 
 
@@ -65,6 +69,14 @@ BOOL salesman::OnInitDialog()
 
 	TCHAR ch = '*';
 	((CEdit *)GetDlgItem(IDC_EDIT_member_pwd))->SetPasswordChar(ch);
+
+	//list初始化
+	m_list.InsertColumn(0, _T("商品id"), 0, 100);
+	m_list.InsertColumn(1, _T("商品名称"), 0, 100);
+	m_list.InsertColumn(2, _T("商品价格"), 0, 100);
+	m_list.InsertColumn(3, _T("购买数量"), 0, 100);
+	//构建commodity_map
+	commodity_map = get_the_map();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
@@ -107,8 +119,8 @@ void salesman::OnBnClickedButton1()
 			AfxMessageBox(_T("登录成功！"));
 			member_now.member_id = member_id;
 			member_now.if_login = 1;
-			//施工中
-			member_now.integral = m_pRecordset->GetCollect("integral").GetVARIANT().date;
+			//下面这两种方法都可以把CString转成float，但是都不能解决float的精度问题，不过或许这不重要？
+			member_now.integral = _ttof((CString)m_pRecordset->GetCollect("integral").GetVARIANT());
 			member_now.consumption = m_pRecordset->GetCollect("consumption").GetVARIANT().date;
 			m_edit_mid.SetWindowText(member_now.member_id);
 			m_edit_mter.SetWindowText((CString)m_pRecordset->GetCollect("integral").GetVARIANT());
@@ -153,4 +165,69 @@ void salesman::OnBnClickedButtonmembersignout()
 	m_edit_mter.SetWindowText(_T(""));
 	m_edit_mid_input.SetWindowText(_T(""));
 	m_edit_mpwd_input.SetWindowText(_T(""));
+}
+
+
+void salesman::OnBnClickedButtonaddtolist()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString commodity_id, commodity_count, commodity_prise;
+	int list_row = m_list.GetItemCount();
+	GetDlgItemText(IDC_EDIT3, commodity_id);
+	GetDlgItemText(IDC_EDIT4, commodity_count);
+	//检查是否输入了正确的id
+	if (!commodity_map.count(commodity_id))
+	{
+		AfxMessageBox(_T("ID错误！"));
+		return;
+	}
+	float the_prise = commodity_map[commodity_id];
+	//检查list中是否已有该ID,如果已有该ID,修改count即可
+	int kkk;
+	for (int i = 0; i < list_row; i++)
+		if (commodity_id == m_list.GetItemText(i, 0))
+		{
+			kkk = _ttoi(m_list.GetItemText(i, 3));
+			kkk += _ttoi(commodity_count);
+			commodity_count.Format(_T("%d"), kkk);
+			m_list.SetItemText(i, 3, commodity_count);
+			return;
+		}
+	//如果没有该ID
+	m_list.InsertItem(list_row, commodity_id);
+	m_list.SetItemText(list_row, 1, commodity_count);
+	commodity_prise.Format(_T("%.2lf"), the_prise);
+	m_list.SetItemText(list_row, 2, commodity_prise);
+	m_list.SetItemText(list_row, 3, commodity_count);
+	return;
+}
+
+
+std::map<CString, float> salesman::get_the_map()
+{
+	std::map<CString, float> to_return;
+	_ConnectionPtr m_pConnection;
+	_CommandPtr m_pCommand;
+	_RecordsetPtr m_pRecordset;
+	CString stSql;
+	HRESULT hr = m_pConnection.CreateInstance("ADODB.Connection");
+	if (SUCCEEDED(hr))
+	{
+		CString strConnection("Driver={sql server};server=127.0.0.1;database=MSCSDB;uid=sa;pwd=123456;");
+		m_pConnection->Open((LPCTSTR)strConnection, "", "", adModeUnknown);
+		m_pRecordset.CreateInstance("ADODB.Recordset");
+
+		stSql.Format(_T("select * from stock" ));
+		m_pRecordset->Open((LPCTSTR)stSql, m_pConnection.GetInterfacePtr(), adOpenStatic, adLockOptimistic, adCmdText);
+		_variant_t TheValue;
+		while (!m_pRecordset->adoEOF)
+		{
+			to_return.insert(std::pair<CString, float>(m_pRecordset->GetCollect("id"), m_pRecordset->GetCollect("prise")));
+			m_pRecordset->MoveNext();
+		}
+		m_pRecordset->Close();
+		m_pConnection->Close();
+		m_pRecordset = NULL;
+	}
+	return to_return;
 }

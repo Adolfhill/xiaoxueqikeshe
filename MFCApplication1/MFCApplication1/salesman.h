@@ -1,6 +1,6 @@
 ﻿#pragma once
-
-
+#include <map>
+#include <vector>
 // salesman 对话框
 
 struct member
@@ -35,6 +35,8 @@ public:
 	afx_msg void OnClose();
 	virtual BOOL OnInitDialog();
 private:
+	std::map<CString, float> commodity_map;
+	std::map<CString, float> get_the_map();     //构建commodity_map
 	member member_now;
 public:
 	afx_msg void OnBnClickedButton1();
@@ -45,6 +47,10 @@ public:
 	afx_msg void OnBnClickedButtonmembersignout();
 	CEdit m_edit_mid_input;
 	CEdit m_edit_mpwd_input;
+	CListCtrl m_list;
+	CEdit m_edit_commodity_id;
+	CEdit m_edit_commodity_count;
+	afx_msg void OnBnClickedButtonaddtolist();
 };
 
 
