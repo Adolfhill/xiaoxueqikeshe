@@ -203,6 +203,11 @@ void salesman::OnBnClickedButtonaddtolist()
 		AfxMessageBox(_T("ID错误！"));
 		return;
 	}
+	if (commodity_count == "")
+	{
+		AfxMessageBox(_T("数量错误！"));
+		return;
+	}
 	float the_prise = commodity_map[commodity_id];
 	//检查list中是否已有该ID,如果已有该ID,修改count即可
 	int kkk;
