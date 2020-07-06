@@ -157,6 +157,12 @@ void salesman::OnBnClickedButton2()
 	//注册成功
 	member_now = dlg.member_now;
 	AfxMessageBox(_T("注册成功！\n 您的ID为")+member_now.member_id);
+
+	//更新显示
+	CString int_print;
+	int_print.Format(_T("%.2f"), member_now.integral);
+	m_edit_mid.SetWindowText(member_now.member_id);
+	m_edit_mter.SetWindowText(int_print);
 	return;
 }
 
