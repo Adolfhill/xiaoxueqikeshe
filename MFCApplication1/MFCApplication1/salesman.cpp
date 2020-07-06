@@ -6,7 +6,7 @@
 #include "salesman.h"
 #include "afxdialogex.h"
 #include "member_registered.h"
-
+#include "pay.h"
 
 // salesman 对话框
 
@@ -76,9 +76,8 @@ BOOL salesman::OnInitDialog()
 
 	//list初始化
 	m_list.InsertColumn(0, _T("商品id"), 0, 100);
-	m_list.InsertColumn(1, _T("商品名称"), 0, 100);
-	m_list.InsertColumn(2, _T("商品价格"), 0, 100);
-	m_list.InsertColumn(3, _T("购买数量"), 0, 100);
+	m_list.InsertColumn(1, _T("商品价格"), 0, 100);
+	m_list.InsertColumn(2, _T("购买数量"), 0, 100);
 	//构建commodity_map
 	commodity_map = get_the_map();
 
@@ -204,18 +203,17 @@ void salesman::OnBnClickedButtonaddtolist()
 	for (int i = 0; i < list_row; i++)
 		if (commodity_id == m_list.GetItemText(i, 0))
 		{
-			kkk = _ttoi(m_list.GetItemText(i, 3));
+			kkk = _ttoi(m_list.GetItemText(i, 2));
 			kkk += _ttoi(commodity_count);
 			commodity_count.Format(_T("%d"), kkk);
-			m_list.SetItemText(i, 3, commodity_count);
+			m_list.SetItemText(i, 2, commodity_count);
 			return;
 		}
 	//如果没有该ID
 	m_list.InsertItem(list_row, commodity_id);
-	m_list.SetItemText(list_row, 1, commodity_count);
 	commodity_prise.Format(_T("%.2lf"), the_prise);
-	m_list.SetItemText(list_row, 2, commodity_prise);
-	m_list.SetItemText(list_row, 3, commodity_count);
+	m_list.SetItemText(list_row, 1, commodity_prise);
+	m_list.SetItemText(list_row, 2, commodity_count);
 	return;
 }
 
@@ -252,7 +250,105 @@ std::map<CString, float> salesman::get_the_map()
 void salesman::OnBnClickedButton4()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//计算价格
+	float sum = 0;
+	for (int i = 0; i < m_list.GetItemCount(); i++)
+	{
+		sum += _ttoi(m_list.GetItemText(i, 1))*_ttoi(m_list.GetItemText(i, 2));
+	}
+	if (member_now.consumption > 500)
+	{
+		AfxMessageBox(_T("总消费额达到500元 ，享受95折优惠"));
+		sum *= 0.95;
+	}
+	pay dlg;
+	dlg.sum = sum;
+	if (member_now.if_login)
+	{
+		dlg.integral = member_now.integral;
+	}
+	else
+	{
+		dlg.integral = 0;
+	}
+	dlg.DoModal();
+	if (!dlg.ok)
+	{
+		AfxMessageBox(_T("取消支付！"));
+		return;
+	}
+	AfxMessageBox(_T("支付成功！"));
+	member_now.integral += dlg.sum;
+	member_now.integral -= float(dlg.use_integral);
+	//现在使用的积分保存在dlg.use_integral中，接下来要做的就是修改下面两个表了
+	//修改member表
+	if(member_now.if_login)
+		Update_member(dlg.sum);
+	//修改stock表
+	CString stock_id, stock_count;
+	for (int i = 0; i < m_list.GetItemCount(); i++)
+	{
+		stock_id = m_list.GetItemText(i, 0);
+		stock_count = m_list.GetItemText(i, 2);
+		Update_stock(stock_id,stock_count);
+	}
+	//自动退出会员并清空list
+	OnBnClickedButtonmembersignout();
+	m_list.DeleteAllItems();
 }
+
+void salesman::Update_stock(CString stock_id, CString stock_count)
+{
+	_ConnectionPtr m_pConnection;//数据库连接对象
+	_CommandPtr m_pCommand;//数据库命令对象
+	HRESULT hresult = m_pConnection.CreateInstance("ADODB.Connection"); //创建Connection对象
+	if (SUCCEEDED(hresult))
+	{
+		m_pCommand.CreateInstance("ADODB.Command");
+		CString strConnection("Driver={sql server};server=127.0.0.1;database=MSCSDB;uid=sa;pwd=123456;");
+		m_pConnection->Open((LPCTSTR)strConnection, "", "", adModeUnknown);
+		CString strSql;
+		strSql.Format(_T("update Stock set stock=stock-") + stock_count + _T(" where id=") + stock_id);
+		m_pCommand->ActiveConnection = m_pConnection;
+		m_pCommand->CommandText = (LPCTSTR)strSql;
+		m_pCommand->Execute(NULL, NULL, adCmdUnknown);
+		m_pCommand = NULL;
+		m_pConnection->Close();
+		m_pConnection = NULL;
+
+	}
+}
+
+
+void salesman::Update_member(float sum)
+{
+	float new_co = member_now.consumption + sum;
+	CString strco;
+	strco.Format(_T("%.2f"), new_co);
+	float new_int = member_now.integral;
+	CString strin;
+	strin.Format(_T("%.2f"), new_int);
+
+	_ConnectionPtr m_pConnection;//数据库连接对象
+	_CommandPtr m_pCommand;//数据库命令对象
+	HRESULT hresult = m_pConnection.CreateInstance("ADODB.Connection"); //创建Connection对象
+	if (SUCCEEDED(hresult))
+	{
+		m_pCommand.CreateInstance("ADODB.Command");
+		CString strConnection("Driver={sql server};server=127.0.0.1;database=MSCSDB;uid=sa;pwd=123456;");
+		m_pConnection->Open((LPCTSTR)strConnection, "", "", adModeUnknown);
+		CString strSql;
+		strSql.Format(_T("update member set consumption=" + strco + ",integral=" + strin + " where id=" + member_now.member_id));
+		m_pCommand->ActiveConnection = m_pConnection;
+		m_pCommand->CommandText = (LPCTSTR)strSql;
+		m_pCommand->Execute(NULL, NULL, adCmdUnknown);
+		m_pCommand = NULL;
+		m_pConnection->Close();
+		m_pConnection = NULL;
+
+	}
+}
+
 
 
 void salesman::OnBnClickedButtonselectall()

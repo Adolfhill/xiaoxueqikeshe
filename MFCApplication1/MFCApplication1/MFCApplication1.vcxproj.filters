@@ -39,6 +39,9 @@
     <ClInclude Include="member_registered.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="pay.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCApplication1.cpp">
@@ -54,6 +57,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="member_registered.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pay.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

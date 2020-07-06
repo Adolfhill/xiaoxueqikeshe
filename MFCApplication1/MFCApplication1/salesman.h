@@ -48,6 +48,10 @@ public:
 	afx_msg void OnBnClickedButtonselectall();
 	afx_msg void OnBnClickedButtonrev();
 	afx_msg void OnBnClickedButtondel();
+
+private:
+	void Update_member(float sum);
+	void Update_stock(CString stock_id,CString stock_count);
 };
 
 
