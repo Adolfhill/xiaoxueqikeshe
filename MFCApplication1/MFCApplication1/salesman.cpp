@@ -291,7 +291,6 @@ void salesman::OnBnClickedButton4()
 	AfxMessageBox(_T("支付成功！"));
 	member_now.integral += dlg.sum;
 	member_now.integral -= float(dlg.use_integral);
-	//现在使用的积分保存在dlg.use_integral中，接下来要做的就是修改下面两个表了
 	//修改member表
 	if(member_now.if_login)
 		Update_member(dlg.sum);
@@ -303,10 +302,90 @@ void salesman::OnBnClickedButton4()
 		stock_count = m_list.GetItemText(i, 2);
 		Update_stock(stock_id,stock_count);
 	}
+	//记录购物信息
+	if (member_now.if_login)
+		Update_order_info(member_now.member_id, dlg.use_integral);
+	else
+		Update_order_info(_T("NULL"), 0);
+	//记录购物详细信息
+	CString order_id_now = get_max_order_id();
+	for (int i = 0; i < m_list.GetItemCount(); i++)
+	{
+		record_details(order_id_now, m_list.GetItemText(i, 0), m_list.GetItemText(i, 2));
+	}
 	//自动退出会员并清空list
 	OnBnClickedButtonmembersignout();
 	m_list.DeleteAllItems();
 }
+
+void salesman::record_details(CString the_id_now, CString stock_id, CString stock_count)
+{
+	_ConnectionPtr m_pConnection;//数据库连接对象
+	_CommandPtr m_pCommand;//数据库命令对象
+	HRESULT hresult = m_pConnection.CreateInstance("ADODB.Connection"); //创建Connection对象
+	if (SUCCEEDED(hresult))
+	{
+		m_pCommand.CreateInstance("ADODB.Command");
+		CString strConnection("Driver={sql server};server=127.0.0.1;database=MSCSDB;uid=sa;pwd=123456;");
+		m_pConnection->Open((LPCTSTR)strConnection, "", "", adModeUnknown);
+		CString strSql;
+		strSql.Format(_T("insert into order_details (id,stock_id,stock_count) values (")+the_id_now+_T(",")+stock_id+_T(",")+stock_count+_T(")"));
+		m_pCommand->ActiveConnection = m_pConnection;
+		m_pCommand->CommandText = (LPCTSTR)strSql;
+		m_pCommand->Execute(NULL, NULL, adCmdUnknown);
+		m_pCommand = NULL;
+		m_pConnection->Close();
+		m_pConnection = NULL;
+	}
+}
+
+CString salesman::get_max_order_id()
+{
+	CString the_max_id;
+	_ConnectionPtr m_pConnection;
+	_CommandPtr m_pCommand;
+	_RecordsetPtr m_pRecordset;
+	CString stSql;
+	HRESULT hr = m_pConnection.CreateInstance("ADODB.Connection");
+	if (SUCCEEDED(hr))
+	{
+		CString strConnection("Driver={sql server};server=127.0.0.1;database=MSCSDB;uid=sa;pwd=123456;");
+		m_pConnection->Open((LPCTSTR)strConnection, "", "", adModeUnknown);
+		m_pRecordset.CreateInstance("ADODB.Recordset");
+		stSql.Format(_T("select * from order_info where id>=ALL (select id from order_info)"));
+		m_pRecordset->Open((LPCTSTR)stSql, m_pConnection.GetInterfacePtr(), adOpenStatic, adLockOptimistic, adCmdText);
+		the_max_id = m_pRecordset->GetCollect("id");
+		m_pRecordset->Close();
+		m_pConnection->Close();
+		m_pRecordset = NULL;
+	}
+	return the_max_id;
+}
+
+void salesman::Update_order_info(CString member_id, int integral)
+{
+	CString str_int;
+	str_int.Format(_T("%d"), integral);
+	_ConnectionPtr m_pConnection;//数据库连接对象
+	_CommandPtr m_pCommand;//数据库命令对象
+	HRESULT hresult = m_pConnection.CreateInstance("ADODB.Connection"); //创建Connection对象
+	if (SUCCEEDED(hresult))
+	{
+		m_pCommand.CreateInstance("ADODB.Command");
+		CString strConnection("Driver={sql server};server=127.0.0.1;database=MSCSDB;uid=sa;pwd=123456;");
+		m_pConnection->Open((LPCTSTR)strConnection, "", "", adModeUnknown);
+		CString strSql;
+		strSql.Format(_T("insert into order_info (member_id,the_time,integral) values(") + member_id + _T(",CONVERT(varchar,GETDATE(),20),") + str_int+_T(")"));
+		m_pCommand->ActiveConnection = m_pConnection;
+		m_pCommand->CommandText = (LPCTSTR)strSql;
+		m_pCommand->Execute(NULL, NULL, adCmdUnknown);
+		m_pCommand = NULL;
+		m_pConnection->Close();
+		m_pConnection = NULL;
+	}
+}
+
+
 
 void salesman::Update_stock(CString stock_id, CString stock_count)
 {

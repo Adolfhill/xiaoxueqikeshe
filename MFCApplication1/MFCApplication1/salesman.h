@@ -52,6 +52,9 @@ public:
 private:
 	void Update_member(float sum);
 	void Update_stock(CString stock_id,CString stock_count);
+	void Update_order_info(CString member_id, int integral);
+	CString get_max_order_id();
+	void record_details(CString the_id_now, CString stock_id, CString stock_count);
 };
 
 

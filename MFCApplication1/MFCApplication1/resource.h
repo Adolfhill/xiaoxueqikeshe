@@ -10,6 +10,8 @@
 #define IDD_DIALOG_salesman             130
 #define IDD_DIALOG_registered           132
 #define IDD_DIALOG_pay                  134
+#define IDD_DIALOG_menager              136
+#define IDD_DIALOG_manager              136
 #define IDC_EDIT_user_id                1000
 #define IDC_EDIT_user_pwd               1001
 #define IDC_BUTTON_login_ok             1002
@@ -41,7 +43,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        136
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101

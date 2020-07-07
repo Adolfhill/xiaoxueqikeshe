@@ -8,6 +8,7 @@
 #include "MFCApplication1Dlg.h"
 #include "afxdialogex.h"
 #include "salesman.h"
+#include "Manager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -228,8 +229,8 @@ void CMFCApplication1Dlg::OnBnClickedButtonloginok()
 			else if (((CButton *)GetDlgItem(IDC_RADIO2))->GetCheck())
 			{
 				//经理页面
-				//Manager Dlg;
-				//Dlg.DoModal();
+				Manager Dlg;
+				Dlg.DoModal();
 			}
 			
 		}
