@@ -54,6 +54,15 @@
     <ClInclude Include="update_sal.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="stock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="addstock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="apd_the_stock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCApplication1.cpp">
@@ -84,6 +93,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="update_sal.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="addstock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="apd_the_stock.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

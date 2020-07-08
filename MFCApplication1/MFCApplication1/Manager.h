@@ -24,4 +24,5 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnClose();
 	afx_msg void OnBnClickedButtonupdatesalesman();
+	afx_msg void OnBnClickedButton1();
 };

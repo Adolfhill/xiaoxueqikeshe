@@ -15,6 +15,9 @@
 #define IDD_DIALOG_update_salesman      138
 #define IDD_DIALOG_new_salesman         140
 #define IDD_DIALOG1                     142
+#define IDD_DIALOG_stock                144
+#define IDD_DIALOG_add_stock            146
+#define IDD_DIALOG_apd_the_stock        148
 #define IDC_EDIT_user_id                1000
 #define IDC_EDIT_user_pwd               1001
 #define IDC_BUTTON_login_ok             1002
@@ -48,14 +51,17 @@
 #define IDC_EDIT_id                     1033
 #define IDC_EDIT_pwd                    1034
 #define IDC_EDIT_name                   1035
+#define IDC_EDIT_prise                  1037
+#define IDC_EDIT_stock                  1038
+#define IDC_BUTTON_apd_stock            1039
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        144
+#define _APS_NEXT_RESOURCE_VALUE        150
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1036
+#define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

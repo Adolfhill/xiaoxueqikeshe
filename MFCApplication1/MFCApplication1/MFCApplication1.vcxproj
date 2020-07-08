@@ -187,6 +187,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="addstock.h" />
+    <ClInclude Include="apd_the_stock.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="member_registered.h" />
@@ -197,11 +199,14 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="salesman.h" />
+    <ClInclude Include="stock.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="update_sal.h" />
     <ClInclude Include="Update_salesman.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="addstock.cpp" />
+    <ClCompile Include="apd_the_stock.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="member_registered.cpp" />
     <ClCompile Include="MFCApplication1.cpp" />
@@ -215,6 +220,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="salesman.cpp" />
+    <ClCompile Include="stock.cpp" />
     <ClCompile Include="update_sal.cpp" />
     <ClCompile Include="Update_salesman.cpp" />
   </ItemGroup>

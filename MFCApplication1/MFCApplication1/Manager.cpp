@@ -6,6 +6,9 @@
 #include "Manager.h"
 #include "afxdialogex.h"
 #include "Update_salesman.h"
+#include "stock.h"
+
+
 
 // Manager 对话框
 
@@ -30,6 +33,7 @@ void Manager::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(Manager, CDialogEx)
 	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_update_salesman, &Manager::OnBnClickedButtonupdatesalesman)
+	ON_BN_CLICKED(IDC_BUTTON1, &Manager::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -60,5 +64,13 @@ void Manager::OnBnClickedButtonupdatesalesman()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	Update_salesman dlg;
+	dlg.DoModal();
+}
+
+
+void Manager::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	stock dlg;
 	dlg.DoModal();
 }
