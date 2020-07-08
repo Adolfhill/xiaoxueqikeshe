@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 #include "Update_salesman.h"
 #include "stock.h"
-
+#include "view_member.h"
 
 
 // Manager 对话框
@@ -34,6 +34,7 @@ BEGIN_MESSAGE_MAP(Manager, CDialogEx)
 	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_update_salesman, &Manager::OnBnClickedButtonupdatesalesman)
 	ON_BN_CLICKED(IDC_BUTTON1, &Manager::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON3, &Manager::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -72,5 +73,13 @@ void Manager::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	stock dlg;
+	dlg.DoModal();
+}
+
+
+void Manager::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	view_member dlg;
 	dlg.DoModal();
 }

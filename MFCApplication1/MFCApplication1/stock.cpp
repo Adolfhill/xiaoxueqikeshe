@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 #include "addstock.h"
 #include "apd_the_stock.h"
-
+#include "view_seven_days.h"
 
 
 // stock 对话框
@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(stock, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_apd_stock, &stock::OnBnClickedButtonapdstock)
 	ON_BN_CLICKED(IDC_BUTTON1, &stock::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &stock::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &stock::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -194,4 +195,31 @@ void stock::OnBnClickedButton2()
 	// TODO: 在此添加控件通知处理程序代码
 	for (int i = 0; i < m_list.GetItemCount(); i++)
 		m_list.SetCheck(i, !m_list.GetCheck(i));
+}
+
+
+void stock::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	int count = 0;
+	int j = 0;
+	for (int i = 0; i < m_list.GetItemCount(); i++)
+		if (m_list.GetCheck(i))
+		{
+			count++;
+			j = i;
+		}
+	if (count == 0)
+	{
+		AfxMessageBox(_T("请选择要查看的商品！"));
+		return;
+	}
+	if (count > 1)
+	{
+		AfxMessageBox(_T("请勿选择多个商品！"));
+		return;
+	}
+	view_seven_days dlg;
+	dlg.ID = m_list.GetItemText(j, 0);
+	dlg.DoModal();
 }

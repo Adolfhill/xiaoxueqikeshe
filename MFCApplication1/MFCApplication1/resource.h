@@ -18,6 +18,11 @@
 #define IDD_DIALOG_stock                144
 #define IDD_DIALOG_add_stock            146
 #define IDD_DIALOG_apd_the_stock        148
+#define IDD_DIALOG_view_member          150
+#define IDD_DIALOG_view_details         152
+#define IDD_DIALOG_the_details          154
+#define IDD_DIALOG2                     156
+#define IDD_DIALOG_7days                156
 #define IDC_EDIT_user_id                1000
 #define IDC_EDIT_user_pwd               1001
 #define IDC_BUTTON_login_ok             1002
@@ -59,9 +64,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        150
+#define _APS_NEXT_RESOURCE_VALUE        158
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_CONTROL_VALUE         1041
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

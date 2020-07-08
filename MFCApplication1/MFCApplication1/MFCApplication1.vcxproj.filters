@@ -63,6 +63,18 @@
     <ClInclude Include="apd_the_stock.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="view_member.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="view_member_details.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="the_details.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="view_seven_days.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCApplication1.cpp">
@@ -102,6 +114,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="apd_the_stock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="view_member.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="view_member_details.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="the_details.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="view_seven_days.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

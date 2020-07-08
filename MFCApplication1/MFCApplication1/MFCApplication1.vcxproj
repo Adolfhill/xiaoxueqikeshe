@@ -201,8 +201,12 @@
     <ClInclude Include="salesman.h" />
     <ClInclude Include="stock.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="the_details.h" />
     <ClInclude Include="update_sal.h" />
     <ClInclude Include="Update_salesman.h" />
+    <ClInclude Include="view_member.h" />
+    <ClInclude Include="view_member_details.h" />
+    <ClInclude Include="view_seven_days.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="addstock.cpp" />
@@ -221,8 +225,12 @@
     </ClCompile>
     <ClCompile Include="salesman.cpp" />
     <ClCompile Include="stock.cpp" />
+    <ClCompile Include="the_details.cpp" />
     <ClCompile Include="update_sal.cpp" />
     <ClCompile Include="Update_salesman.cpp" />
+    <ClCompile Include="view_member.cpp" />
+    <ClCompile Include="view_member_details.cpp" />
+    <ClCompile Include="view_seven_days.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFCApplication1.rc" />

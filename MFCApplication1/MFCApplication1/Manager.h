@@ -25,4 +25,5 @@ public:
 	afx_msg void OnClose();
 	afx_msg void OnBnClickedButtonupdatesalesman();
 	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton3();
 };
