@@ -145,9 +145,12 @@ void stock::OnBnClickedButtonadd()
 	// TODO: 在此添加控件通知处理程序代码
 	addstock dlg;
 	dlg.DoModal();
-	AfxMessageBox(_T("添加成功！"));
-	m_list.DeleteAllItems();
-	set_list();
+	if (dlg.ok)
+	{
+		AfxMessageBox(_T("添加成功！"));
+		m_list.DeleteAllItems();
+		set_list();
+	}
 }
 
 

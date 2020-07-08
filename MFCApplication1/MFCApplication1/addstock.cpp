@@ -65,9 +65,21 @@ void addstock::OnBnClickedButton1()
 		m_pCommand = NULL;
 		m_pConnection->Close();
 		m_pConnection = NULL;
+		ok = 1;
 	}
 	this->OnClose();
 	this->OnCancel();
 	this->OnDestroy();
 	this->PostNcDestroy();
+}
+
+
+BOOL addstock::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	// TODO:  在此添加额外的初始化
+	ok = 0;
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 异常: OCX 属性页应返回 FALSE
 }
