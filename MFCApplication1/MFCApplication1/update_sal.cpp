@@ -49,6 +49,16 @@ void update_sal::OnBnClickedButton1()
 		name = _T("NULL");
 	else
 		name = _T("'") + name + _T("'");
+	if (pwd == "")
+	{
+		AfxMessageBox(_T("请输入密码！"));
+		return;
+	}
+	if (pwd.GetLength() < 6)
+	{
+		AfxMessageBox(_T("密码长度不能少于六位！"));
+		return;
+	}
 	//请求数据库
 	_ConnectionPtr m_pConnection;//数据库连接对象
 	_CommandPtr m_pCommand;//数据库命令对象
